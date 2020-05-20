@@ -16,17 +16,19 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
             transaction = session.beginTransaction();
-            Long movieId = (Long) session.save(movie);
+            session.save(movie);
             transaction.commit();
-            movie.setId(movieId);
             return movie;
         } catch (Exception e) {
-            if (transaction != null) {
+            if(transaction != null) {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert movie entity", e);
+        } finally {
+            session.close();
         }
     }
 
