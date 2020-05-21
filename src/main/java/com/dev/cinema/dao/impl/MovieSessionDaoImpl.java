@@ -20,7 +20,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query query = session
                     .createQuery("FROM MovieSession WHERE showTime > :date");
-            query.setParameter("date", LocalDateTime.of(date, LocalTime.now()));
+            query.setParameter("date",date.atStartOfDay());
             return query.list();
         } catch (Exception e) {
             throw new DataProcessingException("Can't retrieve available sessions", e);
@@ -41,6 +41,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't add movie session", e);
+        } finally {
+            session.close();
         }
     }
 }
