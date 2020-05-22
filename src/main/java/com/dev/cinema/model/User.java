@@ -11,14 +11,14 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
+@ToString(of = {"email", "password"})
 @Entity
-@Table(name = "movies")
-public class Movie {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
+    private String email;
+    private String password;
+    private byte[] salt;
 }
-
