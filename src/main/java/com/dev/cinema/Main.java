@@ -34,7 +34,7 @@ public class Main {
         sessionOne.setCinemaHall(redHall);
         sessionOne.setMovie(movie);
         sessionOne.setShowTime(LocalDateTime.of(LocalDate.of(2020, 5, 19),
-                LocalTime.of(23, 30)));
+                LocalTime.of(15, 45)));
         MovieSessionService movieSessionService =
                 (MovieSessionService) INJECTOR.getInstance(MovieSessionService.class);
         movieSessionService.add(sessionOne);

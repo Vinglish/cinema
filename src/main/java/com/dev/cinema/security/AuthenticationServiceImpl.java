@@ -14,7 +14,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User login(String email, String password) throws AuthenticationException {
         User userFromDB = userService.findByEmail(email).orElseThrow(() ->
                 new AuthenticationException("Incorrect user name or password"));
-
         if (HashUtil.hashPassword(password, userFromDB.getSalt())
                 .equals(userFromDB.getPassword())) {
             return userFromDB;
@@ -24,6 +23,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public User register(String email, String password) {
-        return null;
+        User user = new User(email);
+        user.setSalt(HashUtil.getSalt());
+        user.setPassword(HashUtil.hashPassword(user.getPassword(), user.getSalt()));
+        return userService.add(user);
     }
 }
