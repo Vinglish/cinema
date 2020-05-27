@@ -4,9 +4,13 @@ import com.dev.cinema.lib.Injector;
 import com.dev.cinema.model.CinemaHall;
 import com.dev.cinema.model.Movie;
 import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.model.User;
+import com.dev.cinema.security.AuthenticationService;
 import com.dev.cinema.service.CinemaHallService;
 import com.dev.cinema.service.MovieService;
 import com.dev.cinema.service.MovieSessionService;
+import com.dev.cinema.service.ShoppingCartService;
+import com.dev.cinema.service.UserService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -41,5 +45,19 @@ public class Main {
         List<MovieSession> sessions = movieSessionService.findAvailableSessions(movie.getId(),
                 LocalDate.of(2020, 5, 19));
         sessions.forEach(System.out::println);
+
+        AuthenticationService authenticationService =
+                (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
+
+        authenticationService.register("admin", "admin");
+
+        UserService userService =
+                (UserService) INJECTOR.getInstance(UserService.class);
+        User user = userService.findByEmail("admin").get();
+
+        ShoppingCartService shoppingCartService =
+                (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
+        shoppingCartService.addSession(sessionOne, user);
+        shoppingCartService.getByUser(user);
     }
 }
