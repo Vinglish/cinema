@@ -1,5 +1,6 @@
 package com.dev.cinema.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,6 +27,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private LocalDateTime orderDate;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private List<Ticket> tickets;
@@ -33,7 +36,8 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    public Order(List<Ticket> tickets, User user) {
+    public Order(LocalDateTime orderDate, List<Ticket> tickets, User user) {
+        this.orderDate = orderDate;
         this.tickets = tickets;
         this.user = user;
     }
