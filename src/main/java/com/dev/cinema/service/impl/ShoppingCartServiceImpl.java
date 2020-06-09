@@ -8,8 +8,10 @@ import com.dev.cinema.model.Ticket;
 import com.dev.cinema.model.User;
 import com.dev.cinema.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private final ShoppingCartDao shoppingCartDao;
@@ -30,6 +32,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ShoppingCart getByUser(User user) {
         return shoppingCartDao.getByUser(user);
     }

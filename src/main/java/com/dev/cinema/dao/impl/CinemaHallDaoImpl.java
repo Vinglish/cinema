@@ -1,52 +1,26 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.CinemaHallDao;
-import com.dev.cinema.exceptions.DataProcessingException;
 import com.dev.cinema.model.CinemaHall;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private final SessionFactory sessionFactory;
-
-    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
-    public CinemaHall add(CinemaHall cinemaHall) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.save(cinemaHall);
-            transaction.commit();
-            return cinemaHall;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Can't add cinema hall", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+    public void add(CinemaHall cinemaHall) {
+        em.persist(cinemaHall);
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            Query<CinemaHall> query = session.createQuery("FROM CinemaHall", CinemaHall.class);
-            return query.list();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all cinema halls", e);
-        }
+        TypedQuery<CinemaHall> query = em.createQuery("FROM CinemaHall", CinemaHall.class);
+        return query.getResultList();
     }
 }

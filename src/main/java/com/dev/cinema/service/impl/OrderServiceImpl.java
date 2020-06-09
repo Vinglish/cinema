@@ -10,8 +10,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDao orderDao;
@@ -23,14 +25,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order completeOrder(List<Ticket> tickets, User user) {
+    public void completeOrder(List<Ticket> tickets, User user) {
         List<Ticket> ticketList = new ArrayList<>(tickets);
         var order = new Order(LocalDateTime.now(), ticketList, user);
         shoppingCartService.clear(shoppingCartService.getByUser(user));
-        return orderDao.add(order);
+        orderDao.add(order);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Order> getOrderHistory(User user) {
         return orderDao.getOrderHistory(user);
     }

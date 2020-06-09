@@ -6,8 +6,10 @@ import com.dev.cinema.service.MovieSessionService;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class MovieSessionServiceImpl implements MovieSessionService {
 
     private final MovieSessionDao movieSessionDao;
@@ -17,12 +19,13 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         return movieSessionDao.findAvailableSessions(movieId, date);
     }
 
     @Override
-    public MovieSession add(MovieSession session) {
-        return movieSessionDao.add(session);
+    public void add(MovieSession session) {
+        movieSessionDao.add(session);
     }
 }
