@@ -1,45 +1,26 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.MovieDao;
-import com.dev.cinema.exceptions.DataProcessingException;
-import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.Movie;
-import com.dev.cinema.util.HibernateUtil;
 import java.util.List;
-import javax.persistence.criteria.CriteriaQuery;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieDaoImpl implements MovieDao {
+    @PersistenceContext
+    private EntityManager em;
+
     @Override
-    public Movie add(Movie movie) {
-        Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            transaction = session.beginTransaction();
-            session.save(movie);
-            transaction.commit();
-            return movie;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Can't insert movie entity", e);
-        } finally {
-            session.close();
-        }
+    public void add(Movie movie) {
+        em.persist(movie);
     }
 
     @Override
     public List<Movie> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
-                    .createQuery(Movie.class);
-            criteriaQuery.from(Movie.class);
-            return session.createQuery(criteriaQuery).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving all movies", e);
-        }
+        TypedQuery<Movie> query = em.createQuery("FROM Movie", Movie.class);
+        return query.getResultList();
     }
 }

@@ -1,43 +1,28 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.UserDao;
-import com.dev.cinema.exceptions.DataProcessingException;
-import com.dev.cinema.lib.Dao;
 import com.dev.cinema.model.User;
-import com.dev.cinema.util.HibernateUtil;
 import java.util.Optional;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class UserDaoImpl implements UserDao {
+    @PersistenceContext
+    private EntityManager em;
+
     @Override
-    public User add(User user) {
-        Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-            return user;
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Can't create user", e);
-        } finally {
-            session.close();
-        }
+    public void add(User user) {
+        em.persist(user);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<User> query = session.createQuery(
-                    "FROM User WHERE email = :email", User.class);
-            query.setParameter("email", email);
-            return query.uniqueResultOptional();
-        }
+        TypedQuery<User> query = em.createQuery(
+                "FROM User WHERE email = :email", User.class);
+        query.setParameter("email", email);
+        return Optional.ofNullable(query.getSingleResult());
     }
 }
