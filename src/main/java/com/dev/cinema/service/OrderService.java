@@ -1,8 +1,8 @@
 package com.dev.cinema.service;
 
-import com.dev.cinema.model.Order;
-import com.dev.cinema.model.Ticket;
-import com.dev.cinema.model.User;
+import com.dev.cinema.models.Order;
+import com.dev.cinema.models.Ticket;
+import com.dev.cinema.models.User;
 import java.util.List;
 
 public interface OrderService {

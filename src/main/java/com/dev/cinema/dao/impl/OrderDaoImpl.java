@@ -1,8 +1,8 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.OrderDao;
-import com.dev.cinema.model.Order;
-import com.dev.cinema.model.User;
+import com.dev.cinema.models.Order;
+import com.dev.cinema.models.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

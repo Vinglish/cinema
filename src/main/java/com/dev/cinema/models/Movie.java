@@ -1,11 +1,9 @@
-package com.dev.cinema.model;
+package com.dev.cinema.models;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +15,17 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
-@Table(name = "tickets")
-public class Ticket {
+@Table(name = "movies")
+public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String title;
+    private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MovieSession movieSession;
-
-    public Ticket(MovieSession movieSession) {
-        this.movieSession = movieSession;
+    public Movie(String title, String description) {
+        this.title = title;
+        this.description = description;
     }
 }
+

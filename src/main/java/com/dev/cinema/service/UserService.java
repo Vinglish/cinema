@@ -1,6 +1,6 @@
 package com.dev.cinema.service;
 
-import com.dev.cinema.model.User;
+import com.dev.cinema.models.User;
 import java.util.Optional;
 
 public interface UserService {
@@ -8,4 +8,5 @@ public interface UserService {
 
     Optional<User> findByEmail(String email);
 
+    User getById(Long id);
 }
