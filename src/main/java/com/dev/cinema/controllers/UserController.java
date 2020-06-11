@@ -1,7 +1,7 @@
 package com.dev.cinema.controllers;
 
-import com.dev.cinema.models.User;
 import com.dev.cinema.models.dto.user.UserResponseDto;
+import com.dev.cinema.models.mappers.UserMapper;
 import com.dev.cinema.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,21 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final UserMapper userMapper;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
-    @GetMapping("/get_by_email/{email}")
-    public UserResponseDto get(
-            @PathVariable String email) {
+    @GetMapping("/byEmail/{email}")
+    public UserResponseDto get(@PathVariable String email) {
         var user = userService.findByEmail(email).orElseThrow();
-        return userToUserResponseDto(user);
-    }
-
-    private UserResponseDto userToUserResponseDto(User user) {
-        var id = user.getId();
-        var email = user.getEmail();
-        return new UserResponseDto(id, email);
+        return userMapper.entityToDto(user);
     }
 }

@@ -3,6 +3,7 @@ package com.dev.cinema.controllers;
 import com.dev.cinema.models.MovieSession;
 import com.dev.cinema.models.User;
 import com.dev.cinema.models.dto.user.UserResponseDto;
+import com.dev.cinema.models.mappers.ShoppingCartMapper;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
@@ -18,13 +19,15 @@ public class ShoppingCartController {
     private final MovieSessionService movieSessionService;
     private final ShoppingCartService shoppingCartService;
     private final UserService userService;
+    private final ShoppingCartMapper shoppingCartMapper;
 
     public ShoppingCartController(MovieSessionService movieSessionService,
                                   ShoppingCartService shoppingCartService,
-                                  UserService userService) {
+                                  UserService userService, ShoppingCartMapper shoppingCartMapper) {
         this.movieSessionService = movieSessionService;
         this.shoppingCartService = shoppingCartService;
         this.userService = userService;
+        this.shoppingCartMapper = shoppingCartMapper;
     }
 
     @PostMapping("/add_movie_session")
@@ -35,15 +38,9 @@ public class ShoppingCartController {
         shoppingCartService.addSession(movieSession, user);
     }
 
-    @GetMapping("/get_by_user")
+    @GetMapping("/byUser")
     public UserResponseDto get(@RequestParam(name = "userId") Long id) {
         var user = userService.getById(id);
-        return userToUserResponseDto(user);
-    }
-
-    private UserResponseDto userToUserResponseDto(User user) {
-        var id = user.getId();
-        var email = user.getEmail();
-        return new UserResponseDto(id, email);
+        return shoppingCartMapper.entityToDto(user);
     }
 }
