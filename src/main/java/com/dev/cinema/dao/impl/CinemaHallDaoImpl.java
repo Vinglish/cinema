@@ -1,7 +1,7 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.CinemaHallDao;
-import com.dev.cinema.model.CinemaHall;
+import com.dev.cinema.models.CinemaHall;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,5 +22,13 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         TypedQuery<CinemaHall> query = em.createQuery("FROM CinemaHall", CinemaHall.class);
         return query.getResultList();
+    }
+
+    @Override
+    public CinemaHall getById(Long id) {
+        TypedQuery<CinemaHall> query = em.createQuery(
+                "FROM CinemaHall WHERE id = :id", CinemaHall.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 }

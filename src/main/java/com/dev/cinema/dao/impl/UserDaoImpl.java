@@ -1,7 +1,7 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.UserDao;
-import com.dev.cinema.model.User;
+import com.dev.cinema.models.User;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,5 +24,13 @@ public class UserDaoImpl implements UserDao {
                 "FROM User WHERE email = :email", User.class);
         query.setParameter("email", email);
         return Optional.ofNullable(query.getSingleResult());
+    }
+
+    @Override
+    public User getById(Long id) {
+        TypedQuery<User> query = em.createQuery(
+                "FROM User WHERE id = :id", User.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 }

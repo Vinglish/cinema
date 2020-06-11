@@ -1,8 +1,8 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.ShoppingCartDao;
-import com.dev.cinema.model.ShoppingCart;
-import com.dev.cinema.model.User;
+import com.dev.cinema.models.ShoppingCart;
+import com.dev.cinema.models.User;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;

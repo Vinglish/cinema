@@ -1,7 +1,7 @@
 package com.dev.cinema.dao;
 
-import com.dev.cinema.model.ShoppingCart;
-import com.dev.cinema.model.User;
+import com.dev.cinema.models.ShoppingCart;
+import com.dev.cinema.models.User;
 
 public interface ShoppingCartDao {
     void add(ShoppingCart shoppingCart);

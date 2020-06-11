@@ -1,15 +1,14 @@
-package com.dev.cinema.model;
+package com.dev.cinema.models;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,24 +20,21 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "shopping_carts")
+public class ShoppingCart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-
-    private LocalDateTime orderDate;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private List<Ticket> tickets;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     private User user;
 
-    public Order(LocalDateTime orderDate, List<Ticket> tickets, User user) {
-        this.orderDate = orderDate;
-        this.tickets = tickets;
+    public ShoppingCart(User user) {
         this.user = user;
     }
 }

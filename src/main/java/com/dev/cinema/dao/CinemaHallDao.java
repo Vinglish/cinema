@@ -1,6 +1,6 @@
 package com.dev.cinema.dao;
 
-import com.dev.cinema.model.CinemaHall;
+import com.dev.cinema.models.CinemaHall;
 import java.util.List;
 
 public interface CinemaHallDao {
@@ -8,4 +8,5 @@ public interface CinemaHallDao {
 
     List<CinemaHall> getAll();
 
+    CinemaHall getById(Long id);
 }

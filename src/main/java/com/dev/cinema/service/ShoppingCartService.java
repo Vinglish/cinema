@@ -1,8 +1,8 @@
 package com.dev.cinema.service;
 
-import com.dev.cinema.model.MovieSession;
-import com.dev.cinema.model.ShoppingCart;
-import com.dev.cinema.model.User;
+import com.dev.cinema.models.MovieSession;
+import com.dev.cinema.models.ShoppingCart;
+import com.dev.cinema.models.User;
 
 public interface ShoppingCartService {
 

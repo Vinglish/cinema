@@ -1,6 +1,6 @@
 package com.dev.cinema.service;
 
-import com.dev.cinema.model.Movie;
+import com.dev.cinema.models.Movie;
 import java.util.List;
 
 public interface MovieService {
@@ -8,4 +8,5 @@ public interface MovieService {
     
     List<Movie> getAll();
 
+    Movie getById(Long id);
 }

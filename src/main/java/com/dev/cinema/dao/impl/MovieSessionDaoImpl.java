@@ -1,7 +1,7 @@
 package com.dev.cinema.dao.impl;
 
 import com.dev.cinema.dao.MovieSessionDao;
-import com.dev.cinema.model.MovieSession;
+import com.dev.cinema.models.MovieSession;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -29,5 +29,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public void add(MovieSession movieSession) {
         em.persist(movieSession);
+    }
+
+    @Override
+    public MovieSession getById(Long id) {
+        TypedQuery<MovieSession> query = em.createQuery(
+                "FROM MovieSession WHERE id = :id", MovieSession.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 }
