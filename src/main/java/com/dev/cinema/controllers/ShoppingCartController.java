@@ -1,12 +1,12 @@
 package com.dev.cinema.controllers;
 
 import com.dev.cinema.models.MovieSession;
-import com.dev.cinema.models.User;
 import com.dev.cinema.models.dto.user.UserResponseDto;
 import com.dev.cinema.models.mappers.ShoppingCartMapper;
 import com.dev.cinema.service.MovieSessionService;
 import com.dev.cinema.service.ShoppingCartService;
 import com.dev.cinema.service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,15 +32,15 @@ public class ShoppingCartController {
 
     @PostMapping("/add-movie-session")
     public void add(@RequestParam Long movieSessionId,
-                    @RequestParam Long userId) {
-        User user = userService.getById(userId);
+                    Authentication auth) {
+        var user = userService.findByEmail(auth.getName()).orElseThrow();
         MovieSession movieSession = movieSessionService.getById(movieSessionId);
         shoppingCartService.addSession(movieSession, user);
     }
 
     @GetMapping("/byUser")
-    public UserResponseDto get(@RequestParam Long userId) {
-        var user = userService.getById(userId);
+    public UserResponseDto get(Authentication auth) {
+        var user = userService.findByEmail(auth.getName()).orElseThrow();
         return shoppingCartMapper.entityToDto(user);
     }
 }
