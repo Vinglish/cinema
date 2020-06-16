@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 @PasswordsValueMatch
 public class UserRequestRegistrationDto {
-    @NotNull(message = "Email can't be null!")
+
     @EmailConstraint
     private String email;
 
