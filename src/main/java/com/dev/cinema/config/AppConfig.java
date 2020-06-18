@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = {"com.dev.cinema.dao", "com.dev.cinema.service",
-        "com.dev.cinema.security", "com.dev.cinema.util", "com.dev.cinema.models.mappers"})
+        "com.dev.cinema.security", "com.dev.cinema.models.mappers"})
 public class AppConfig {
     @Autowired
     private Environment env;
@@ -30,7 +30,7 @@ public class AppConfig {
         final LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("org.spring.models");
+        em.setPackagesToScan("com.dev.cinema.models");
 
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

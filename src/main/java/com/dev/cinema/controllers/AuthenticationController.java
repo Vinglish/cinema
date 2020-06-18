@@ -15,7 +15,7 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registration")
     public void register(@RequestBody @Valid UserRequestRegistrationDto req) {
         authenticationService.register(req.getEmail(),
                 req.getPassword());

@@ -19,7 +19,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
-    @GetMapping("/byEmail/{email}")
+    @GetMapping("/by-email/{email}")
     public UserResponseDto get(@PathVariable String email) {
         var user = userService.findByEmail(email).orElseThrow();
         return userMapper.entityToDto(user);

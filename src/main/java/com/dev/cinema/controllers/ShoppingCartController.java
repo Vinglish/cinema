@@ -38,7 +38,7 @@ public class ShoppingCartController {
         shoppingCartService.addSession(movieSession, user);
     }
 
-    @GetMapping("/byUser")
+    @GetMapping("/by-user")
     public UserResponseDto get(Authentication auth) {
         var user = userService.findByEmail(auth.getName()).orElseThrow();
         return shoppingCartMapper.entityToDto(user);

@@ -1,38 +1,33 @@
 package com.dev.cinema.models;
 
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(of = {"email", "password"})
-@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "roles")
+public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)
-    private String email;
+    @Enumerated(EnumType.STRING)
+    private RoleName roleName;
 
-    private String password;
-
-    @ManyToMany
-    private Set<Role> roles;
-
-    public User(String email) {
-        this.email = email;
+    public enum RoleName {
+        ADMIN, USER
     }
 }

@@ -21,7 +21,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> findByEmail(String email) {
         TypedQuery<User> query = em.createQuery(
-                "FROM User WHERE email = :email", User.class);
+                "FROM User u LEFT JOIN FETCH u.roles "
+                        + "WHERE u.email = :email", User.class);
         query.setParameter("email", email);
         return Optional.ofNullable(query.getSingleResult());
     }
