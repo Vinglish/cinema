@@ -1,6 +1,7 @@
 package com.dev.cinema.models;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +31,7 @@ public class ShoppingCart {
     @JoinColumn(name = "ticket_id")
     private List<Ticket> tickets;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @MapsId
     private User user;
 

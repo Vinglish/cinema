@@ -3,7 +3,6 @@ package com.dev.cinema.service.impl;
 import com.dev.cinema.dao.UserDao;
 import com.dev.cinema.models.User;
 import com.dev.cinema.service.UserService;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<User> findByEmail(String email) {
+    public User findByEmail(String email) {
         return userDao.findByEmail(email);
     }
 

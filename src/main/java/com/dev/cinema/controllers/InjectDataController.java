@@ -8,9 +8,9 @@ import com.dev.cinema.service.UserService;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
-@Controller
+@Component
 public class InjectDataController {
     private final RoleService roleService;
     private final ShoppingCartService shoppingCartService;
