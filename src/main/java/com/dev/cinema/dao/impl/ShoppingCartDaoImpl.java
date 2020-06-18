@@ -15,7 +15,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public void add(ShoppingCart shoppingCart) {
-        em.persist(shoppingCart);
+        em.merge(shoppingCart);
     }
 
     @Override

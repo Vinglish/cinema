@@ -33,14 +33,14 @@ public class ShoppingCartController {
     @PostMapping("/add-movie-session")
     public void add(@RequestParam Long movieSessionId,
                     Authentication auth) {
-        var user = userService.findByEmail(auth.getName()).orElseThrow();
+        var user = userService.findByEmail(auth.getName());
         MovieSession movieSession = movieSessionService.getById(movieSessionId);
         shoppingCartService.addSession(movieSession, user);
     }
 
-    @GetMapping("/byUser")
+    @GetMapping("/by-user")
     public UserResponseDto get(Authentication auth) {
-        var user = userService.findByEmail(auth.getName()).orElseThrow();
+        var user = userService.findByEmail(auth.getName());
         return shoppingCartMapper.entityToDto(user);
     }
 }
